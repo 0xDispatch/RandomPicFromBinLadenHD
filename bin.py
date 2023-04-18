@@ -6,6 +6,7 @@ import traceback
 import time 
 
 #here's a list id with some gimmick accounts 
+#you can create a list and add whoever you want and change the id to ur list
 list_id = "1648058838115921920"
 # Define the credentials for Twitter API
 CK = "NEVER GONNA GIVE YOU UP"
@@ -40,12 +41,12 @@ def download_image(url, filename):
     return False
 
 
-def tweet_image(img, url, tweet_id):
+def tweet_image(img, text, tweet_id):
   try:
     media = api.media_upload(img)
     m=[]
     m.append(media.media_id)
-    api.update_status(status=f"pic name: {url}", in_reply_to_status_id=tweet_id, media_ids=m, auto_populate_reply_metadata=True)
+    api.update_status(status=f"pic name: {text}", in_reply_to_status_id=tweet_id, media_ids=m, auto_populate_reply_metadata=True)
 
     return True
   except Exception as e:
@@ -56,12 +57,12 @@ def tweet_image(img, url, tweet_id):
 # Define the main function that runs the bot
 def main(tweet_id):
   lines = read_file("images.txt")
-  line = random.choice(lines)
-  line = line[1:].strip()
+  line = random.choice(lines)[1:].strip()
   print(line)
-  type = line[len(line)-4:]
-  img = download_image(line, f"r{type}")
-  tweet_image(img=img, url=line, tweet_id=tweet_id)
+  ext = line[len(line)-4:]
+  text=line[38:]
+  img = download_image(line, f"r{ext}")
+  tweet_image(img=img, text=text, tweet_id=tweet_id)
  
 #who needs a database anyway 
 replied = []
@@ -71,7 +72,7 @@ def check():
                 tweet_id = dict(tweet._json)["id"]
                 tweet_text = dict(tweet._json)["full_text"]
                 favorited= dict(tweet._json)["favorited"]
-                #some lazy uhh filters
+                #some lazy checks
                 if favorited or tweet_id in replied or tweet_text.startswith("RT @"):
                     return True
                 else:
