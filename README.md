@@ -1,8 +1,8 @@
- 
- ​#​ ​RandomPicFromBinLadenHD
+# RandomPicFromBinLaden Hard Drive
 
 just a stupid bot i just made
-it'll check a twitter list if there's a new tweet it'll take a random line from ``image.txt`` and download the picture
+it'll check a twitter list if there's a new tweet it'll take a random line from ``image.txt`` and download the picture then reply.
+
 the code is literally lazy af so feel free to make it better(if you want to be on the CIA watchlist ofc)
   
   
